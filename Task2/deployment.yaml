@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaletestapp-deployment
+  labels:
+    app: scaletestapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scaletestapp
+  template:
+    metadata:
+      labels:
+        app: scaletestapp
+    spec:
+      containers:
+        - name: scaletestapp
+          image: shestera/scaletestapp:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "500m" # Лимит: 0.5 ядра CPU
+              memory: "30Mi" # Лимит: 256 мегабайт RAM
+            requests:
+              cpu: "100m" # Гарантировано: 0.1 ядра CPU
+              memory: "10Mi" # Гарантировано: 128 мегабайт RAM
